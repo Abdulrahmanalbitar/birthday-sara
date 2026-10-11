@@ -1,0 +1,666 @@
+/* =========================================================
+   1) ربط الفونت الخاص بك (Custom Font)
+   ========================================================= */
+
+@font-face {
+  font-family: 'GDFont';
+  src: url('./GD Font Tamplet.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* خيار ب: إذا كان الفونت من Google Fonts، ألصق رابط الـ @import هنا: */
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&family=Sriracha&family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap');
+
+/* =========================================================
+   2) المتغيرات والتنسيقات الأساسية
+   ========================================================= */
+:root {
+  /* استبدل 'Poppins' باسم الفونت الخاص بك إذا كان مختلفاً */
+  --main-font: 'Poppins', GD Font Tamplet ;
+  --title-font: 'Titan One', cursive;
+  --handwriting-font: 'Dancing Script', cursive;
+
+  --color-pink: #feecea;
+  --color-white: #ffffff;
+  --color-black: #2d3436;
+  --color-text-pink: #ff7882;
+  --color-heart: #f61f1f;
+  --color-bg-letter: #fffdf7;
+  --color-border: #f0dfcb;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--main-font);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  font-size: 16px;
+  background-color: var(--color-pink);
+  overflow-x: hidden;
+}
+
+#wrapper {
+  position: relative;
+  background-color: transparent;
+  background-image: 
+    linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.7) 25%, rgba(255, 255, 255, 0.7) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.7) 75%, rgba(255, 255, 255, 0.7) 76%, transparent 77%, transparent), 
+    linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.7) 25%, rgba(255, 255, 255, 0.7) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.7) 75%, rgba(255, 255, 255, 0.7) 76%, transparent 77%, transparent);
+  min-height: 100%;
+  background-size: 80px 80px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Flags in header */
+.flag__birthday {
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-200px);
+  animation: translateYFlag 1.5s 0.5s forwards;
+}
+
+@keyframes translateYFlag {
+  to { transform: translateY(-10px); }
+}
+
+.flag__birthday .flag__left {
+  transform: rotate(-10deg) translate(-20px, 30px);
+}
+
+.flag__birthday .flag__right {
+  transform: rotate(10deg) translate(20px, 30px) scaleX(-1);
+}
+
+/* Layout */
+.content {
+  width: 100%;
+  position: relative;
+  display: flex;
+  padding-top: 2.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .left, 
+.content .right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .left {
+  width: 50%;
+  padding-left: 40px;
+}
+
+.content .right {
+  width: 50%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Title */
+.title {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-family: var(--title-font);
+  font-size: 3.2rem;
+  flex-direction: column;
+  perspective: 1000px;
+  text-align: center;
+}
+
+.title .happy, 
+.title .birthday {
+  position: relative;
+  text-shadow: 
+    3px 3px var(--color-black), 
+    -3px 3px var(--color-black), 
+    3px -3px var(--color-black), 
+    -3px -3px var(--color-black), 
+    4px 7px 0 var(--color-black);
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.title .happy {
+  color: var(--color-white);
+}
+
+.title .birthday {
+  color: var(--color-text-pink);
+}
+
+.title .happy span, 
+.title .birthday span {
+  display: inline-block;
+  transform: translateY(50px);
+  opacity: 0;
+  visibility: hidden;
+  animation: txtTranslateY 0.5s var(--t) forwards;
+}
+
+@keyframes txtTranslateY {
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.title .hat {
+  position: absolute;
+  right: 50px;
+  top: -350px;
+  transform: rotate(-40deg);
+  z-index: 2;
+  animation: topHat 3.5s 2.2s forwards ease;
+}
+
+@keyframes topHat {
+  20%, 30% { top: -25px; transform: rotate(-40deg); }
+  35%, 100% { top: -25px; transform: rotate(0deg); }
+}
+
+/* Birthday Date Badge */
+.date__of__birth, 
+.name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-text-pink);
+  border-radius: 50px;
+  margin-top: 20px;
+}
+
+.date__of__birth {
+  border: 3px solid var(--color-black);
+  position: relative;
+  transform: translateY(-50px);
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  animation: dateOfBirth 2.5s 3.2s forwards;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  gap: 12px;
+}
+
+@keyframes dateOfBirth {
+  30% {
+    width: 0;
+    height: 48px;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    width: 260px;
+    height: 48px;
+  }
+}
+
+.date__of__birth span {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-white);
+  letter-spacing: 1px;
+}
+
+/* Letter Button */
+.left .btn {
+  transform: scale(0);
+  animation: scaleCircle 1.2s 4.2s forwards ease-in-out;
+}
+
+#btn__letter {
+  position: relative;
+  margin-top: 25px;
+  background-color: var(--color-text-pink);
+  outline: none;
+  padding: 10px 28px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 50px;
+  border: 3px solid var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-in-out;
+  gap: 8px;
+}
+
+#btn__letter:hover {
+  border-color: var(--color-heart);
+  background-color: var(--color-heart);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 6px 20px rgba(246, 31, 31, 0.35);
+}
+
+/* Right Section & Profile */
+.right .box__account {
+  position: relative;
+  transform: translateY(500px);
+  animation: topBoxImage 3.5s 1.5s forwards ease-out;
+}
+
+@keyframes topBoxImage {
+  to { transform: translateY(0); }
+}
+
+.content .right .image {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border: 6px solid var(--color-black);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  background-color: #fff;
+}
+
+.content .right .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.name {
+  position: absolute;
+  padding: 6px 30px;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 3px solid var(--color-black);
+  white-space: nowrap;
+  gap: 10px;
+}
+
+.name span {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+/* Rotating Circle Badge */
+.cricle {
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0);
+  animation: scaleCircle 2s 4.2s forwards ease-in-out;
+}
+
+@keyframes scaleCircle {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.text__cricle {
+  width: 95px;
+  height: 95px;
+  background-color: var(--color-text-pink);
+  border-radius: 50%;
+  border: 4px solid var(--color-black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rotateCircle 6s linear infinite;
+}
+
+@keyframes rotateCircle {
+  to { transform: rotate(360deg); }
+}
+
+.text__cricle span {
+  top: 0;
+  left: 50%;
+  position: absolute;
+  color: var(--color-black);
+  transform: rotate(calc(var(--i) * 24deg));
+  transform-origin: 0 45px;
+  font-family: "Sriracha", cursive;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.fa-heart {
+  color: var(--color-heart);
+  filter: drop-shadow(0 0 3px var(--color-heart));
+  animation: scaleHeart 1s infinite linear;
+}
+
+.cricle .fa-heart {
+  position: absolute;
+  transform: scale(0.85);
+}
+
+@keyframes scaleHeart {
+  50% { transform: scale(1.2); }
+}
+
+/* Balloons */
+.right .balloon_one {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  animation: balloon1 2.5s infinite linear;
+}
+
+@keyframes balloon1 {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(4deg); }
+  75% { transform: rotate(-4deg); }
+}
+
+.right .balloon_two {
+  position: absolute;
+  top: 150px;
+  right: -50px;
+  z-index: -1;
+  animation: balloon2 2.5s infinite linear;
+}
+
+@keyframes balloon2 {
+  0%, 100% { transform: rotate(10deg); }
+  25% { transform: rotate(6deg); }
+  75% { transform: rotate(14deg); }
+}
+
+/* Floating Stars & Flowers */
+.decorate_star {
+  position: absolute;
+  transform: scale(0);
+  background-color: var(--color-black);
+  clip-path: polygon(0 50%, 35% 35%, 50% 0, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%);
+  animation: scaleCircle 2s var(--t) forwards, scaleStar 2s 4.5s infinite ease-in-out;
+}
+
+.decorate_star.star1 { width: 18px; height: 18px; top: 75px; left: 300px; }
+.decorate_star.star2 { width: 15px; height: 18px; top: 35px; right: 360px; }
+.decorate_star.star3 { width: 14px; height: 14px; top: 290px; left: 630px; }
+.decorate_star.star4 { width: 16px; height: 16px; bottom: 60px; left: 35px; }
+.decorate_star.star5 { width: 16px; height: 16px; bottom: 140px; left: 500px; }
+
+@keyframes scaleStar {
+  50% { transform: scale(1.2); }
+}
+
+.decorate_bottom { position: absolute; right: 0; bottom: -10px; }
+
+.decorate_flower--one,
+.decorate_flower--two,
+.decorate_flower--three {
+  position: absolute;
+  transform: scale(0);
+  animation: scaleCircle 2s var(--t) forwards ease-in-out;
+}
+
+.decorate_flower--one { top: 250px; left: 50px; }
+.decorate_flower--two { top: 225px; left: 540px; }
+.decorate_flower--three { top: 150px; right: 235px; }
+
+.smiley__icon {
+  position: absolute;
+  bottom: 150px;
+  left: 550px;
+  transform: scale(0);
+  animation: scaleCircle 2s 4.5s forwards ease-in-out;
+}
+
+/* Modal Window */
+.box__letter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: none;
+}
+
+.box__letter .letter__border {
+  position: absolute;
+  width: 90%;
+  max-width: 650px;
+  background-color: var(--color-white);
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.letter__border .close {
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 20;
+  border: 2px solid var(--color-black);
+}
+
+.letter__border .letter {
+  width: 100%;
+  background-color: var(--color-bg-letter);
+  border-radius: 14px;
+  padding: 24px 20px;
+  border: 2px dashed var(--color-border);
+}
+
+/* عنوان الرسالة في الصندوق المنبثق */
+.letter__border .letter .title__letter {
+  text-align: center;
+  font-family: 'GDFont', sans-serif !important;
+  font-weight: bold;
+  font-size: 2.2rem;
+  color: var(--color-text-pink);
+  margin-bottom: 12px;
+  min-height: 42px;
+}
+
+/* نص الرسالة نفسها */
+.content__letter .right .text__letter {
+  padding: 10px;
+  font-family: 'GDFont', sans-serif !important;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: #2f3542;
+  text-align: left;
+}
+.title__letter .fa-solid {
+  margin-left: 8px;
+  font-size: 1.2rem;
+}
+
+.letter__border .letter .content__letter {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.letter__border .letter .content__letter .left {
+  position: relative;
+  width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content__letter .left #heart__letter {
+  opacity: 0;
+  width: 100%;
+  max-width: 160px;
+}
+
+#heart__letter.animationOp,
+#mewmew.animationOp {
+  animation: opacityHeart 1s forwards;
+}
+
+@keyframes opacityHeart {
+  to { opacity: 1; }
+}
+
+.content__letter .left .heart {
+  position: absolute;
+  opacity: 0;
+}
+
+.content__letter .left .heart.animation {
+  animation: scaleHeartLetter 1s var(--t) infinite ease-in-out;
+}
+
+@keyframes scaleHeartLetter {
+  0% { opacity: 1; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.content__letter .left .heart_1 { top: 10px; left: 10px; }
+.content__letter .left .heart_2 { top: 0px; right: 10px; }
+.content__letter .left .heart_3 { bottom: 10px; left: 20px; }
+.content__letter .left .heart_4 { bottom: 0px; right: 10px; }
+
+.content__letter .right {
+  position: relative;
+  width: 65%;
+}
+
+.content__letter .right .text__letter {
+  padding: 10px;
+  font-family: var(--handwriting-font);
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: #2f3542;
+  text-align: left;
+}
+
+.content__letter .right #mewmew {
+  position: absolute;
+  bottom: -25px;
+  right: 0;
+  opacity: 0;
+  width: 65px;
+}
+
+/* Responsive for Mobile */
+@media screen and (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 1rem;
+  }
+
+  .content .left, 
+  .content .right {
+    width: 100%;
+    padding: 0;
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .title .hat {
+    right: 20px;
+    top: -25px !important;
+    width: 90px;
+  }
+
+  .content .right .image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .name span {
+    font-size: 1.1rem;
+  }
+
+  .flag__birthday img {
+    width: 160px;
+  }
+
+  .cricle {
+    top: 5px;
+    right: 15px;
+    transform: scale(0.75);
+  }
+
+  .box__letter .letter__border {
+    width: 92%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 14px;
+  }
+
+  .letter__border .letter .content__letter {
+    flex-direction: column;
+  }
+
+  .letter__border .letter .content__letter .left,
+  .content__letter .right {
+    width: 100%;
+  }
+
+  .content__letter .left #heart__letter {
+    max-width: 110px;
+  }
+
+  .content__letter .right .text__letter {
+    font-size: 1.15rem;
+    text-align: center;
+  }
+
+  .content__letter .right #mewmew {
+    position: static;
+    display: block;
+    margin: 10px auto 0 auto;
+  }
+}
